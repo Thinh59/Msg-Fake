@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin giả hay Tin thật</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 1rem;
+            font-size: 1rem;
+            border-radius: 0.5rem;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            resize: none;
+            margin-bottom: 1rem;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #2563eb;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1d4ed8;
+        }
+        #result-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            transition: background-color 0.5s ease;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: none; /* Ẩn ban đầu */
+        }
+        .result-fake {
+            background-color: #ef4444; /* Đỏ */
+        }
+        .result-true {
+            background-color: #22c55e; /* Xanh lá */
+        }
+        .label-text {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4b5563;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Công cụ kiểm tra Tin giả</h1>
+    <label for="message" class="label-text">Nhập tin nhắn để kiểm tra:</label>
+    <textarea id="message" placeholder="Ví dụ: Chuyển khoản gấp để nhận tiền thưởng..."></textarea>
+    <button onclick="checkMessage()">Kiểm tra</button>
+    <div id="result-box">
+        <p id="result-text"></p>
+    </div>
+</div>
+
+<script>
+    function checkMessage() {
+        const message = document.getElementById('message').value.toLowerCase();
+        const resultBox = document.getElementById('result-box');
+        const resultText = document.getElementById('result-text');
+
+        // Các từ khóa được coi là "tin giả"
+        const fakeKeywords = ['chuyển khoản', 'nhận tiền', 'otp', 'gấp', 'khẩn cấp', 'giải thưởng'];
+
+        let isFake = false;
+        for (const keyword of fakeKeywords) {
+            if (message.includes(keyword)) {
+                isFake = true;
+                break;
+            }
+        }
+
+        resultBox.style.display = 'block'; // Hiển thị kết quả
+        resultBox.classList.remove('result-true', 'result-fake');
+
+        if (isFake) {
+            resultBox.classList.add('result-fake');
+            resultText.textContent = 'Cảnh báo: Tin giả!';
+        } else {
+            resultBox.classList.add('result-true');
+            resultText.textContent = 'Đây là Tin thật.';
+        }
+    }
+</script>
+
+</body>
+</html>
